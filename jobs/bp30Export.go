@@ -21,7 +21,7 @@ func (job BP30Export) Run(ctx context.Context, params string, db *sqlx.DB) error
 			`select TO_NUMBER(TO_CHAR(bop.ptb_proc_mth.get_mth(bop.p_constant.APP_ID_LT)))`,
 			"E", err.Error(),
 		)
-		updateStatus(ctx, db, job.Id, "E")
+		UpdateStatus(ctx, db, job.Id, "E")
 		return err
 	}
 
@@ -35,7 +35,7 @@ func (job BP30Export) Run(ctx context.Context, params string, db *sqlx.DB) error
 			fmt.Sprintf(`select count(*) from ts_lt_bp30 where proc_month = TO_DATE(%d, 'YYYYMM')`, procMonth),
 			"E", err.Error(),
 		)
-		updateStatus(ctx, db, job.Id, "E")
+		UpdateStatus(ctx, db, job.Id, "E")
 		return err
 	}
 
@@ -46,7 +46,7 @@ func (job BP30Export) Run(ctx context.Context, params string, db *sqlx.DB) error
 			fmt.Sprintf(`start %s`, job.Command),
 			"E", err.Error(),
 		)
-		updateStatus(ctx, db, job.Id, "C")
+		UpdateStatus(ctx, db, job.Id, "C")
 		return err
 	}
 

@@ -11,7 +11,11 @@ import (
 )
 
 type Job interface {
-	Run(ctx context.Context, params string, db *sqlx.DB)
+	Run(ctx context.Context, params []string, db *sqlx.DB) error
+}
+
+var JobRegistry = map[string]Job{
+	"$BP2000ROOT/ltRepoExtract.sh": RepoExtract{},
 }
 
 type RespFile struct {
@@ -101,7 +105,7 @@ func addLog(
 	)
 }
 
-func updateStatus(
+func UpdateStatus(
 	ctx context.Context,
 	db *sqlx.DB,
 	id uint,

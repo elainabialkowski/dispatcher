@@ -19,7 +19,7 @@ func (job BP30EditImpute) Run(ctx context.Context, params string, db *sqlx.DB) e
 			fmt.Sprintf(`begin bop.PTB_trans_BP30.edit_impute(%d) end;`, job.Id),
 			"E", err.Error(),
 		)
-		updateStatus(ctx, db, job.Id, "E")
+		UpdateStatus(ctx, db, job.Id, "E")
 		return err
 	}
 
@@ -28,6 +28,6 @@ func (job BP30EditImpute) Run(ctx context.Context, params string, db *sqlx.DB) e
 		fmt.Sprintf(`begin bop.PTB_trans_BP30.edit_impute(%d) end;`, job.Id),
 		"C", "Success!",
 	)
-	updateStatus(ctx, db, job.Id, "C")
+	UpdateStatus(ctx, db, job.Id, "C")
 	return nil
 }

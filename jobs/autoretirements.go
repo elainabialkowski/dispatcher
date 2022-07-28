@@ -22,7 +22,7 @@ func (job AutoRetirements) Run(ctx context.Context, params string, db *sqlx.DB) 
 			fmt.Sprintf(`begin bop.PP_auto_ret.gen_auto_retirement(%d, TO_DATE(%d, 'YYYYMM'), %d); end;`, job.Id, job.Month, job.AppId),
 			"E", err.Error(),
 		)
-		updateStatus(ctx, db, job.Id, "E")
+		UpdateStatus(ctx, db, job.Id, "E")
 		return err
 	}
 
@@ -31,6 +31,6 @@ func (job AutoRetirements) Run(ctx context.Context, params string, db *sqlx.DB) 
 		fmt.Sprintf(`begin bop.PP_auto_ret.gen_auto_retirement(%d, TO_DATE(%d, 'YYYYMM'), %d); end;`, job.Id, job.Month, job.AppId),
 		"C", "Success!",
 	)
-	updateStatus(ctx, db, job.Id, "C")
+	UpdateStatus(ctx, db, job.Id, "C")
 	return nil
 }
